@@ -1,0 +1,14 @@
+# IDE from jetbrains pycharm
+.idea
+.idea/
+
+# python
+__pycache__
+
+# virtual environment
+venv/
+env/
+media/
+.env
+*.env
+*.pyc
