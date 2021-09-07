@@ -1,0 +1,163 @@
+{% block above %}{% endblock %}
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1d3a69">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      {% if request.user.is_authenticated and request.user.tipo == 2 %}
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Brand name -->
+        <a class="navbar-brand" href="/">
+          <img src="/static/img/escudoc.png" height="30" alt="" loading="lazy" />
+        </a>
+        <!-- Brand name end -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Incio</a>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Administradores</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_administradores' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_administradores' %}">Registrar</a></li>
+          </ul>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Alumnos</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_alumnos' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_alumnos' %}">Registrar</a></li>
+          </ul>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Carreras</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_carreras' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_carreras' %}">Registrar</a></li>
+          </ul>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Departamentos</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_departamentos' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_departamentos' %}">Registrar</a></li>
+          </ul>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Docentes</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_docentes' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_docentes' %}">Registrar</a></li>
+          </ul>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Instituciones</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_instituciones' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_instituciones' %}">Registrar</a></li>
+          </ul>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">L&iacute;neas de Investigaci&oacute;n</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_linea_investigacion' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_linea_investigacion' %}">Registrar</a></li>
+          </ul>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Programas</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_programas' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_programas' %}">Registrar</a></li>
+          </ul>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Proyectos</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'list_proyectos' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'register_proyectos' %}">Registrar</a></li>
+          </ul>
+        </li>
+      </ul>
+      {% elif request.user.is_authenticated and request.user.tipo == 1 %}
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Brand name -->
+        <a class="navbar-brand" href="/">
+          <img src="/static/img/escudoc.png" height="30" alt="" loading="lazy" />
+        </a>
+        <!-- Brand name end -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Incio</a>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Proyectos</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'teachers_proyects' %}">Mis Proyectos</a></li>
+          </ul>
+        </li>
+      </ul>
+      {% elif request.user.is_authenticated and request.user.tipo == 0 %}
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Brand name -->
+        <a class="navbar-brand" href="/">
+          <img src="/static/img/escudoc.png" height="30" alt="" loading="lazy" />
+        </a>
+        <!-- Brand name end -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Incio</a>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Proyectos</a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'students_proyects' %}">Mis Proyectos</a></li>
+          </ul>
+        </li>
+      </ul>
+      {% endif %}
+      <ul class="navbar-nav">
+        <!-- Icon dropdown -->
+        <li class="nav-item me-3 me-lg-0 dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fas fa-user"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">{{request.user}}</a></li>
+            <li><a class="dropdown-item" href="{% url 'change_password' %}">Cambiar contrase&ntilde;a</a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+{% block below %}{% endblock %}
