@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block body %}
+<br>
+<br>
+<h1 class="display-5 text-center">{{ title }}</h1>
+<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {% if form.non_field_errors %}
+    <p>{{ form.non_field_errors }}</p>
+    {% endif %}
+    {% for field in form %}
+    <div class="row my-3">
+        {% if field.field.widget.input_type != "select" and field.field.widget.input_type != "number" and field.field.widget.input_type != "time" and field.field.widget.input_type != "file" %}
+        <div class="p-0">
+            <div class="form-floating mb-1">
+                <input
+                        type="{{ field.field.widget.input_type }}"
+                        name="{{ field.html_name }}"
+                        id="{{ field.auto_id }}"
+                        class="form-control {%if field.errors%}is-invalid{%endif%}"
+                        placeholder="{{field.placeholder}}"
+                />
+                <label class="form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="invalid-feedback">{{ field.errors }}</div>
+            </div>
+        </div>
+        {% elif field.field.widget.input_type == "number" %}
+        <div class="p-0">
+            <div class="form-floating mb-1">
+                <input
+                        type="number"
+                        name="{{ field.html_name }}"
+                        id="{{ field.auto_id }}"
+                        class="form-control {%if field.errors%}is-invalid{%endif%}"
+                        step="any"
+                />
+                <label class="form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="invalid-feedback">{{ field.errors }}</div>
+            </div>
+        </div>
+        {% elif field.field.widget.input_type == "select" %}
+        <br>
+        <div class="form-floating p-0">
+            <select class="form-select" id="{{ field.auto_id }}" name="{{ field.html_name }}" aria-label="{% trans 'Status' %}">
+                {% for x, y in field.field.choices %}
+                <option value="{{ x }}">{{ y }}</option>
+                {% endfor %}
+            </select>
+            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+            <div class="invalid-feedback">{{ field.errors }}</div>
+        </div>
+        {% elif field.field.widget.input_type == "file" %}
+        <label for="{{field.auto_id}}" class="form-label">{{ field.label }}</label>
+        <input type="file" class="form-control" id="{{field.auto_id}}" name="{{ field.html_name }}"/>
+        <div class="error p-0">{{ field.errors }}</div>
+        {% else %}
+        {{ field }}
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div class="form-group text-center my-2">
+        <input type="submit" value="{{action}}" class="btn btn-primary">
+    </div>
+</form>
+{% endblock %}

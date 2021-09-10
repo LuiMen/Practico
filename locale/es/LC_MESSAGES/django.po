@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-07 17:38-0600\n"
+"POT-Creation-Date: 2021-09-09 21:03-0600\n"
 "PO-Revision-Date: 2021-09-07 17:20-0600\n"
 "Last-Translator: Luis Mendivil mendiv.luis09@gmail.com\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ExamenPractico/settings.py:119
+#: ExamenPractico/settings.py:120
 msgid "English"
 msgstr "Inglés"
 
-#: ExamenPractico/settings.py:120
+#: ExamenPractico/settings.py:121
 msgid "Spanish"
 msgstr "Español"
 
@@ -585,6 +585,7 @@ msgid "Order"
 msgstr ""
 
 #: env/lib/python3.8/site-packages/django/forms/formsets.py:417
+#: templates/list.html:58
 msgid "Delete"
 msgstr ""
 
@@ -638,6 +639,7 @@ msgid "Currently"
 msgstr ""
 
 #: env/lib/python3.8/site-packages/django/forms/widgets.py:405
+#: users/views.py:43
 msgid "Change"
 msgstr ""
 
@@ -1216,65 +1218,216 @@ msgstr ""
 msgid "Connect, get help, or contribute"
 msgstr ""
 
-#: prospects/models.py:11 prospects/models.py:32
+#: prospects/models.py:13 prospects/models.py:43
 msgid "name"
 msgstr "nombres"
 
-#: prospects/models.py:12
+#: prospects/models.py:14
 msgid "first lastname"
 msgstr "primer apellido"
 
-#: prospects/models.py:13
+#: prospects/models.py:15
 msgid "second lastname"
 msgstr "segundo apellido"
 
-#: prospects/models.py:14
+#: prospects/models.py:16
 msgid "street"
 msgstr "calle"
 
-#: prospects/models.py:15
+#: prospects/models.py:17
 msgid "number"
 msgstr "número"
 
-#: prospects/models.py:16
+#: prospects/models.py:18
 msgid "suburb"
 msgstr "colonia"
 
-#: prospects/models.py:17
+#: prospects/models.py:19
 msgid "zip code"
 msgstr "código postal"
 
-#: prospects/models.py:18
+#: prospects/models.py:20
 msgid "phone"
 msgstr "teléfono"
 
-#: prospects/models.py:19
+#: prospects/models.py:21
 msgid "rfc"
 msgstr "RFC"
 
-#: prospects/models.py:20
+#: prospects/models.py:22
 msgid "status"
 msgstr "estatus"
 
-#: prospects/models.py:24
+#: prospects/models.py:23
+msgid "reject details"
+msgstr "observaciones del rechazo"
+
+#: prospects/models.py:27
 msgid "prospect"
 msgstr "prospecto"
 
-#: prospects/models.py:25
+#: prospects/models.py:28
 msgid "prospects"
 msgstr "prospectos"
 
-#: prospects/models.py:33 prospects/models.py:38
+#: prospects/models.py:35 templates/list.html:15
+msgid "Sent"
+msgstr "Enviado"
+
+#: prospects/models.py:36 templates/list.html:16
+msgid "Authorized"
+msgstr "Autorizado"
+
+#: prospects/models.py:37 templates/list.html:17
+msgid "Rejected"
+msgstr "Rechazado"
+
+#: prospects/models.py:44 prospects/models.py:49
 msgid "document"
 msgstr "documento"
 
-#: prospects/models.py:39
+#: prospects/models.py:50
 msgid "documents"
 msgstr "documentos"
 
-#: templates/registration/login.html:40
-msgid "Forgot your password?"
-msgstr "¿Olvidaste tu contraseña?"
+#: prospects/views.py:11
+#, fuzzy
+#| msgid "prospects"
+msgid "Prospects List"
+msgstr "prospectos"
+
+#: prospects/views.py:12
+msgid "Names"
+msgstr "Nombres"
+
+#: prospects/views.py:12
+msgid "First lastname"
+msgstr "Primer apellido"
+
+#: prospects/views.py:12
+msgid "Second lastname"
+msgstr "Segundo apellido"
+
+#: prospects/views.py:12 prospects/views.py:69 templates/register.html:44
+#: templates/register_prospect.html:45
+msgid "Status"
+msgstr "Estatus"
+
+#: prospects/views.py:62
+msgid "Street"
+msgstr "Calle"
+
+#: prospects/views.py:63
+msgid "Number"
+msgstr "Número"
+
+#: prospects/views.py:64 prospects/views.py:65
+msgid "Suburb"
+msgstr "Colonia"
+
+#: prospects/views.py:66
+msgid "Zip code"
+msgstr "Código postal"
+
+#: prospects/views.py:67
+msgid "Phone"
+msgstr "Teléfono"
+
+#: prospects/views.py:68
+msgid "RFC"
+msgstr "RFC"
+
+#: prospects/views.py:73
+msgid "Reject details"
+msgstr "Observaciones del rechazo"
+
+#: templates/list.html:9
+msgid "Search"
+msgstr "Buscar"
+
+#: templates/list.html:13 templates/list.html:19
+msgid "Filter by status"
+msgstr "Filtro por estatus"
+
+#: templates/list.html:14
+msgid "Select an option"
+msgstr "Selecciona una opción"
+
+#: templates/list.html:55 templates/register_prospect.html:104
+#: templates/view.html:72
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/navbar.html:6
+msgid "Prospects"
+msgstr "Prospectos"
+
+#: templates/navbar.html:14
+msgid "Registry"
+msgstr "Captura"
+
+#: templates/navbar.html:21
+msgid "User"
+msgstr "Usuario"
+
+#: templates/navbar.html:24 users/views.py:42
+msgid "Change password"
+msgstr "Cambiar Contraseña"
+
+#: templates/navbar.html:25
+msgid "Log out"
+msgstr "Cerrar Sesión"
+
+#: templates/register_prospect.html:6
+msgid "Register Prospect"
+msgstr "Registrar Prospecto"
+
+#: templates/register_prospect.html:63 templates/view.html:18
+msgid "Documents"
+msgstr "Documentos"
+
+#: templates/register_prospect.html:88
+msgid "Register"
+msgstr "Captura"
+
+#: templates/register_prospect.html:97
+#, fuzzy
+#| msgid "Are you sure you want to delete it?"
+msgid "Are you sure you want to exit?"
+msgstr "¿Estás seguro de borrarlo?"
+
+#: templates/register_prospect.html:101
+msgid "If you exit all unsaved data will be lost."
+msgstr "Si sales toda la información sin guardar se perderá."
+
+#: templates/register_prospect.html:107
+msgid "Exit"
+msgstr "Salir"
+
+#: templates/registration/login.html:5 templates/registration/login.html:34
+#: users/views.py:15
+msgid "Log in"
+msgstr "Iniciar Sesión"
+
+#: templates/view.html:20
+msgid "No documents attached"
+msgstr "No hay documentos adjuntos"
+
+#: templates/view.html:30
+msgid "Evaluate"
+msgstr "Evaluar"
+
+#: templates/view.html:33
+msgid "Authorize"
+msgstr "Autorizar"
+
+#: templates/view.html:36 templates/view.html:74
+msgid "Reject"
+msgstr "Rechazar"
+
+#: templates/view.html:51
+msgid "Rejecting"
+msgstr "Rechazando"
 
 #: users/forms.py:8
 msgid "Username"
@@ -1288,6 +1441,25 @@ msgstr "Contraseña"
 msgid "Invalid credentials"
 msgstr "Credenciales Inválidas"
 
-#: users/views.py:10
-msgid "Log in"
-msgstr "Iniciar Sesión"
+#: users/forms.py:41
+msgid "Incorrect current password."
+msgstr "Contraseña actual incorrecta"
+
+#: users/forms.py:43
+msgid "Passwords does not match."
+msgstr "Las contraseñas no coinciden"
+
+#~ msgid "Forgot your password?"
+#~ msgstr "¿Olvidaste tu contraseña?"
+
+#~ msgid "Upload file"
+#~ msgstr "Subir archivo"
+
+#~ msgid "Recover password"
+#~ msgstr "Recuperar contraseña"
+
+#~ msgid "Close"
+#~ msgstr "Cerrar"
+
+#~ msgid "Recover"
+#~ msgstr "Recuperar"

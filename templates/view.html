@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block body %}
+<br>
+<br>
+<h1 class="display-5 text-center">{{title}}</h1>
+<div class="card-global p-3 mr-3">
+    <div class=" m-3">
+        <div class="row border-item">
+            {% for key, value in fields.items %}
+            <div class="col-6">
+                <div class="fs-5"><p class="text-title mb-0"><b>{{ key }}:</b>
+                    <p class="fs-2">{{ value }}</p></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <h3 class="text-center">{% trans 'Documents' %}</h3>
+        {% if files.count == 0 %}
+        <p class="text-center fs-2">{% trans 'No documents attached' %}</p>
+        {% endif %}
+        <div class="text-center">
+            {% for file in files %}
+            <button type="button" class="btn btn-success" onclick="window.open('{{ file.file.url }}')">{{file.name}}
+            </button>
+            {% endfor %}
+        </div>
+        {% if not evaluated %}
+        <hr>
+        <h3 class="text-center">{% trans 'Evaluate' %}</h3>
+        <div class="text-center">
+            <a href="../approve/{{title.id}}">
+                <input class="btn btn-success btn-lg" type="button" value="{% trans 'Authorize' %}"/>
+            </a>
+            <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#reject">
+                {% trans 'Reject' %}
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <!-- Modal -->
+    <div class="modal fade" id="reject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="rejectLabel" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejectLabel">{% trans 'Rejecting' %} {{title}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    {% if form.non_field_errors %}
+                    <p>{{ form.non_field_errors }}</p>
+                    {% endif %}
+                    {% for field in form %}
+                    <div class="p-0">
+                        <div class="form-floating mb-1">
+                        <textarea class="form-control {%if field.errors%}is-invalid{%endif%}"
+                                  placeholder="{{field.placeholder}}" id="{{ field.auto_id }}"
+                                  name="{{ field.html_name }}"></textarea>
+                            <label for="{{field.auto_id}}">{{field.label}}</label>
+                            <div class="invalid-feedback">{{ field.errors }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}
+                    </button>
+                    <input class="btn btn-danger" type="submit" value="{% trans 'Reject' %}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

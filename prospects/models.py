@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from prospects.validators import rfc_validator
+
 
 class Prospects(models.Model):
     class Status(models.IntegerChoices):
@@ -16,8 +18,9 @@ class Prospects(models.Model):
     suburb = models.CharField(max_length=80, verbose_name=_('suburb'))
     zip_code = models.CharField(max_length=10, verbose_name=_('zip code'))
     phone = models.CharField(max_length=15, verbose_name=_('phone'))
-    rfc = models.CharField(max_length=12, verbose_name=_('rfc'))
+    rfc = models.CharField(max_length=13, verbose_name=_('rfc'), validators=[rfc_validator])
     status = models.PositiveIntegerField(choices=Status.choices, default=Status.SENT, verbose_name=_('status'))
+    reject_details = models.CharField(max_length=200, verbose_name=_('reject details'), blank=True, null=True)
 
     class Meta:
         default_related_name = 'prospects'
@@ -26,6 +29,14 @@ class Prospects(models.Model):
 
     def __str__(self):
         return '%s %s %s' % (self.name, self.first_lastname, self.second_lastname)
+
+    def get_status_value(self):
+        values = {
+            0: _('Sent'),
+            1: _('Authorized'),
+            2: _('Rejected'),
+        }
+        return values[self.status]
 
 
 class Documents(models.Model):

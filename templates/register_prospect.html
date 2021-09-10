@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block body %}
+<br>
+<br>
+<h1 class="display-5 text-center">{% trans 'Register Prospect' %}</h1>
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete">Salir</button>
+<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    {% if form.non_field_errors %}
+    <p>{{ form.non_field_errors }}</p>
+    {% endif %}
+    {% for field in form %}
+    <div class="row my-3">
+        {% if field.field.widget.input_type != "select" and field.field.widget.input_type != "number" and field.field.widget.input_type != "time" and field.field.widget.input_type != "file" %}
+        <div class="p-0">
+            <div class="form-floating mb-1">
+                <input
+                        type="{{ field.field.widget.input_type }}"
+                        name="{{ field.html_name }}"
+                        id="{{ field.auto_id }}"
+                        class="form-control {%if field.errors%}is-invalid{%endif%}"
+                        placeholder="{{field.placeholder}}"
+                />
+                <label class="form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="invalid-feedback">{{ field.errors }}</div>
+            </div>
+        </div>
+        {% elif field.field.widget.input_type == "number" %}
+        <div class="p-0">
+            <div class="form-floating mb-1">
+                <input
+                        type="number"
+                        name="{{ field.html_name }}"
+                        id="{{ field.auto_id }}"
+                        class="form-control {%if field.errors%}is-invalid{%endif%}"
+                        step="any"
+                />
+                <label class="form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="invalid-feedback">{{ field.errors }}</div>
+            </div>
+        </div>
+        {% elif field.field.widget.input_type == "select" %}
+        <br>
+        <div class="form-floating p-0">
+            <select class="form-select" id="{{ field.auto_id }}" name="{{ field.html_name }}" aria-label="{% trans 'Status' %}">
+                {% for x, y in field.field.choices %}
+                <option value="{{ x }}">{{ y }}</option>
+                {% endfor %}
+            </select>
+            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+            <div class="invalid-feedback">{{ field.errors }}</div>
+        </div>
+        {% elif field.field.widget.input_type == "file" %}
+        <label for="{{field.auto_id}}" class="form-label">{{ field.label }}</label>
+        <input type="file" class="form-control" id="{{field.auto_id}}" name="{{ field.html_name }}"/>
+        <div class="error p-0">{{ field.errors }}</div>
+        {% else %}
+        {{ field }}
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <h3>{% trans 'Documents' %} <span class="badge bg-success rounded-pill fs-4 add-form-row">+</span></h3>
+
+    {{ documents_formset.management_form }}
+    {% for form in documents_formset %}
+        <div class="row form-row spacer">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {% for field in form %}
+                    {% if field.field.widget.input_type != 'hidden' %}
+                        <div class="col-1">
+                            <label id="{{field.auto_id}}" for="{{field.auto_id}}">{{field.label}}</label>
+                        </div>
+                        <div class="col-3">
+                            <input class="form-control form-control-sm" id="{{field.auto_id}}" name="{{field.html_name}}"
+                                   type="{{ field.field.widget.input_type }}">
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
+                <span class="badge bg-danger rounded-pill fs-4 remove-form-row">-</span>
+            </li>
+        </div>
+    {% endfor %}
+
+    <div class="form-group text-center my-2">
+        <input type="submit" value="{% trans 'Register' %}" class="btn btn-primary">
+    </div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="confirmDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">{% trans "Are you sure you want to exit?"%}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{% trans 'If you exit all unsaved data will be lost.' %}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}
+                </button>
+                <a href="../">
+                    <input class="btn btn-danger" type="button" value="{% trans 'Exit' %}"/>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type='text/javascript'>
+function updateElementIndex(el, prefix, ndx) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+    if (el.id) el.id = el.id.replace(id_regex, replacement);
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
+function cloneMore(selector, prefix) {
+    var newElement = $(selector).clone(true);
+    var total = $('.form-row').length;
+    newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+        var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    newElement.find('label').each(function() {
+        var forValue = $(this).attr('for');
+        if (forValue) {
+          forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+          $(this).attr({'for': forValue});
+        }
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.form-row:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+    .removeClass('btn-success').addClass('btn-danger')
+    .removeClass('add-form-row').addClass('remove-form-row')
+    .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+    return false;
+}
+function deleteForm(prefix, btn) {
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        btn.closest('.form-row').remove();
+        var forms = $('.form-row');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i);
+            });
+        }
+    }
+    return false;
+}
+$(document).on('click', '.add-form-row', function(e){
+    e.preventDefault();
+    cloneMore('.form-row:last', 'documents_formset');
+    return false;
+});
+$(document).on('click', '.remove-form-row', function(e){
+    e.preventDefault();
+    deleteForm('documents_formset', $(this));
+    return false;
+});
+</script>
+{% endblock %}

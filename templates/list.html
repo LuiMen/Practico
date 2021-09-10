@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block body %}
+<br>
+<br>
+<h1 class="display-5 text-center">{{title}}</h1>
+<form method="GET" id="searchForm">
+  <div class="form-outline mb-4">
+    <label class="form-label" for="datatable-search-input" style="margin-left: 0px;">{% trans 'Search' %}</label>
+    <input type="text" class="form-control" id="datatable-search-input" name="q" value="{{request.GET.q}}">
+    <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 47.2px;"></div><div class="form-notch-trailing"></div></div></div>
+    <div class="form-floating">
+      <select onchange="filter()" class="form-select" id="status_filter" name="status" aria-label="{% trans 'Filter by status' %}">
+        <option selected value="">{% trans 'Select an option' %}</option>
+        <option value="0">{% trans 'Sent' %}</option>
+        <option value="1">{% trans 'Authorized' %}</option>
+        <option value="2">{% trans 'Rejected' %}</option>
+      </select>
+      <label for="status_filter">{% trans 'Filter by status' %}</label>
+    </div>
+</form>
+<br>
+<div id="datatable-search" class="datatable">
+  <div class="datatable-inner table-responsive ps" style="overflow: auto; position: relative;">
+    <table class="table datatable-table" id="list-datatable-table">
+      <thead class="table-light">
+        <th scope="col">#</th>
+          {% for header in headers %}
+          <td>{{ header }}</td>
+          {% endfor %}
+          <td></td>
+      </thead>
+      <tbody>
+      <tr>
+        {% for q in queryset %}
+          <tr scope="row" data-mdb-index="{{ forloop.counter }}">
+            <th scope="row">{{ forloop.counter }}</th>
+            <td >{{ q.name }}</td>
+            <td >{{ q.first_lastname }}</td>
+            <td >{{ q.second_lastname }}</td>
+            <td >{{ q.get_status_value }}</td>
+            <td>
+              <i class="fas fa-eye" onclick="location.href = '../prospects/{{ q.id }}'"></i>
+              <!-- Modal -->
+              <div class="modal fade" id="confirmDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                   aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmDeleteLabel">{% trans "Are you sure you want to delete it?"
+                        %}</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}
+                      </button>
+                      <a href="../prospects/delete/{{q.id}}">
+                        <input class="btn btn-danger" type="button" value="{% trans 'Delete' %}"/>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  let typingTimer;                //timer identifier
+let doneTypingInterval = 500;  //time in ms (0.5 seconds)
+let myInput = document.getElementById('datatable-search-input');
+let statusFilter = document.getElementById('status_filter');
+
+myInput.addEventListener('keyup', () => {
+    clearTimeout(typingTimer);
+    if (myInput.value) {
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    }
+});
+
+statusFilter.addEventListener('onchange', () => {
+    doneTyping()
+});
+
+function doneTyping () {
+   document.getElementById("searchForm").submit();
+}
+
+function placeCursorAtEnd() {
+  if (this.setSelectionRange) {
+    // Double the length because Opera is inconsistent about
+    // whether a carriage return is one character or two.
+    var len = this.value.length * 2;
+    this.setSelectionRange(len, len);
+  } else {
+    // This might work for browsers without setSelectionRange support.
+    this.value = this.value;
+  }
+
+};
+
+window.onload = function() {
+  var input = document.getElementById("datatable-search-input");
+
+  if (input.addEventListener) {
+    input.addEventListener("focus", placeCursorAtEnd, false);
+  } else if (input.attachEvent) {
+    input.attachEvent('onfocus', placeCursorAtEnd);
+  }
+
+  input.focus();
+}
+
+function filter(){
+  doneTyping();
+}
+</script>
+{% endblock scripts %}
